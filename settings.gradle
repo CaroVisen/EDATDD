@@ -1,0 +1,2 @@
+rootProject.name='EDA1'
+include ':app'
