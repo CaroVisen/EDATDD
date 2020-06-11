@@ -1,14 +1,20 @@
 package com.example.eda1
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
     lateinit var articulos: List<Articulo>
@@ -26,7 +32,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { //crea otro item de la lista de la vista
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.activity_listado, parent, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.item_listado, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -37,11 +43,32 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
         val tituloArticulo = view.findViewById(R.id.txt_titulo) as TextView
         val price = view.findViewById(R.id.txt_price) as TextView
         val imagenArt = view.findViewById(R.id.img_foto) as ImageView
+        val irDetalle = view.findViewById(R.id.btn_irDetalle) as Button
 
         fun bind(articulo: Articulo, context: Context){
             tituloArticulo.text = articulo.title
-            price.text = articulo.price.toString()
+            price.text = "$" + articulo.price.toString()
             imagenArt.loadUrl(articulo.thumbnail)
+            irDetalle.setOnClickListener {
+
+                    Api().getOneArticle(articulo.id.toString(), object: Callback<Articulo> {
+                        override fun onFailure(call: Call<Articulo>, t: Throwable) {
+                            Toast.makeText(irDetalle.context, "Error al ir a Detalle del Producto", Toast.LENGTH_LONG).show()
+                        }
+                        override fun onResponse(call: Call<Articulo>, response: Response<Articulo>) {
+                            if (response.isSuccessful) {
+
+                                val intent = Intent(irDetalle.context, DetalleActivity::class.java)
+                                intent.putExtra("titulo", articulo.title)
+                                intent.putExtra("img", articulo.thumbnail)
+                                intent.putExtra("price", articulo.price.toString())
+                                startActivity(irDetalle.context,  intent, null)
+
+                            }
+                        }
+                    })
+
+            }
         }
         fun ImageView.loadUrl(url: String) {
             Picasso.get().load(url.replace("http", "https")).into(this)

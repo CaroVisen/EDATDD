@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ddd"
-    tools:context=".MainActivity">
-
+    tools:context=".DetalleActivity">
 
     <RelativeLayout
-        android:id="@+id/rl_toolbar"
+        android:id="@+id/rl_toolbarDetalle"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#fff159">
+        android:background="#fff159"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/img_logo"
@@ -24,8 +24,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:contentDescription="TODO"
-            app:srcCompat="@drawable/logo_ml" />
+            app:srcCompat="@drawable/logo_ml"
+            android:contentDescription="TODO" />
 
         <ImageButton
             android:id="@+id/btn_search"
@@ -50,10 +50,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/btn_search"
-            android:background="#ffffff"
             android:ems="10"
+            android:inputType="textPersonName"
             android:hint="@string/estoy_buscando"
-            android:inputType="textPersonName" />
+            android:background="#ffffff"/>
 
         <ImageView
             android:id="@+id/img_menu"
@@ -82,21 +82,61 @@
             app:srcCompat="@drawable/icono_carrito" />
     </RelativeLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvListaArticulos"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txt_desc_titulo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_toolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="#ddd"
-        app:layout_constraintBottom_toBottomOf="@id/rl_toolbar"
-        app:layout_constraintVertical_bias="0.48000002"
-        tools:layout_editor_absoluteX="25dp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_toolbarDetalle" />
+
+    <ImageView
+        android:id="@+id/img_desc"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc_titulo" />
+
+    <TextView
+        android:id="@+id/txt_desc_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_desc" />
+
+    <TextView
+        android:id="@+id/txt_desc_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc_price" />
 
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
