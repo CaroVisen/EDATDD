@@ -18,16 +18,14 @@ import retrofit2.Response
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
     lateinit var articulos: List<Articulo>
-    lateinit var context: Context
 
-    fun RecyclerAdapter(articulos: List<Articulo>, context: MainActivity){ //constructor
+    fun RecyclerAdapter(articulos: List<Articulo>){ //constructor
         this.articulos = articulos
-        this.context = context
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) { //se fija que elemento del objeto va en que posicion del reciclerview segun su posicion
         val item = articulos.get(position)
-        holder.bind(item, context)
+        holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { //crea otro item de la lista de la vista
@@ -45,23 +43,24 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
         val imagenArt = view.findViewById(R.id.img_foto) as ImageView
         val irDetalle = view.findViewById(R.id.btn_irDetalle) as Button
 
-        fun bind(articulo: Articulo, context: Context){
+        fun bind(articulo: Articulo){
             tituloArticulo.text = articulo.title
             price.text = "$" + articulo.price.toString()
             imagenArt.loadUrl(articulo.thumbnail)
-            irDetalle.setOnClickListener {
+            irDetalle.setOnClickListener {var buscaArticulo : DetalleActivity
 
-                    Api().getOneArticle(articulo.id.toString(), object: Callback<Articulo> {
-                        override fun onFailure(call: Call<Articulo>, t: Throwable) {
+                    Api().getOneArticleDetalle(articulo.id.toString(), object: Callback<ArticuloDetalle> {
+                        override fun onFailure(call: Call<ArticuloDetalle>, t: Throwable) {
                             Toast.makeText(irDetalle.context, "Error al ir a Detalle del Producto", Toast.LENGTH_LONG).show()
                         }
-                        override fun onResponse(call: Call<Articulo>, response: Response<Articulo>) {
+                        override fun onResponse(call: Call<ArticuloDetalle>, response: Response<ArticuloDetalle>) {
                             if (response.isSuccessful) {
-
+                                var detalleDeArticulo : ArticuloDetalle? = response.body()
                                 val intent = Intent(irDetalle.context, DetalleActivity::class.java)
                                 intent.putExtra("titulo", articulo.title)
                                 intent.putExtra("img", articulo.thumbnail)
                                 intent.putExtra("price", articulo.price.toString())
+                                intent.putExtra("descripcion", detalleDeArticulo!!.plain_text)
                                 startActivity(irDetalle.context,  intent, null)
 
                             }
@@ -70,6 +69,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
 
             }
         }
+
         fun ImageView.loadUrl(url: String) {
             Picasso.get().load(url.replace("http", "https")).into(this)
         }

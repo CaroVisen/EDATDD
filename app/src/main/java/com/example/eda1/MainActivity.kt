@@ -12,7 +12,6 @@ import retrofit2.Response
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var mRecyclerview: RecyclerView
     var mAdapter:RecyclerAdapter=RecyclerAdapter()
 
@@ -20,6 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btn_search.setOnClickListener { buscar() }
+        if(intent.hasExtra("SEARCH_TERM")){
+            lbl_search.setText(intent.extras!!.getString("SEARCH_TERM"))
+            buscar()
+        }
     }
 
     fun buscar(){
@@ -46,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         mRecyclerview = findViewById(R.id.rvListaArticulos)
         mRecyclerview.setHasFixedSize(true)
         mRecyclerview.layoutManager = LinearLayoutManager(this)
-        mAdapter.RecyclerAdapter(art, this)
+        mAdapter.RecyclerAdapter(art)
         mRecyclerview.adapter = mAdapter
     }
 }

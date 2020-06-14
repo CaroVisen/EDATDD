@@ -18,7 +18,9 @@ class Api {
         getAPI().getAllArticles(q).enqueue(callback)
     }
 
-    fun getOneArticle(id: String, callback: Callback<Articulo>) {
-        getAPI().getArticle(id).enqueue(callback)
+    fun getOneArticleDetalle(id: String, callback: Callback<ArticuloDetalle>) {
+        getAPI().getArticleDetalle(id).enqueue(callback)
+
     }
+
 }

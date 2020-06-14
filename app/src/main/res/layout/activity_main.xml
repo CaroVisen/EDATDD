@@ -55,31 +55,6 @@
             android:hint="@string/estoy_buscando"
             android:inputType="textPersonName" />
 
-        <ImageView
-            android:id="@+id/img_menu"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toEndOf="@+id/lbl_search"
-            app:srcCompat="@drawable/icono_menu" />
-
-        <ImageView
-            android:id="@+id/img_carrito"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toEndOf="@+id/img_menu"
-            app:srcCompat="@drawable/icono_carrito" />
     </RelativeLayout>
 
 

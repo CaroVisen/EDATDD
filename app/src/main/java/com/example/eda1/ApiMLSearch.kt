@@ -10,6 +10,9 @@ interface ApiMLSearch {
     fun getAllArticles(@Query("q") query: String): Call<ListaArticulos>
 
     @GET("items/{itemId}")
-    fun getArticle(@Path("itemId") id: String): Call<Articulo>
+    fun getOneArticle(@Path("itemId") id: String): Call<Articulo>
+
+    @GET("items/{itemId}/description")
+    fun getArticleDetalle(@Path("itemId") id: String): Call<ArticuloDetalle>
 }
 
