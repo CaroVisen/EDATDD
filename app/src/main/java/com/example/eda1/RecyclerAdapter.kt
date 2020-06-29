@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
-    lateinit var articulos: List<Articulo>
+    private lateinit var articulos: List<Articulo>
 
     fun RecyclerAdapter(articulos: List<Articulo>){ //constructor
         this.articulos = articulos
@@ -47,30 +47,20 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()  {
             tituloArticulo.text = articulo.title
             price.text = "$" + articulo.price.toString()
             imagenArt.loadUrl(articulo.thumbnail)
-            irDetalle.setOnClickListener {var buscaArticulo : DetalleActivity
+            irDetalle.setOnClickListener {
+                val intent = Intent(irDetalle.context, DetalleActivity::class.java)
+                intent.putExtra("id", articulo.id)
+                intent.putExtra("titulo", articulo.title)
+                intent.putExtra("img", articulo.thumbnail)
+                intent.putExtra("price", articulo.price.toString())
+                startActivity(irDetalle.context,  intent, null)
 
-                    Api().getOneArticleDetalle(articulo.id.toString(), object: Callback<ArticuloDetalle> {
-                        override fun onFailure(call: Call<ArticuloDetalle>, t: Throwable) {
-                            Toast.makeText(irDetalle.context, "Error al ir a Detalle del Producto", Toast.LENGTH_LONG).show()
-                        }
-                        override fun onResponse(call: Call<ArticuloDetalle>, response: Response<ArticuloDetalle>) {
-                            if (response.isSuccessful) {
-                                var detalleDeArticulo : ArticuloDetalle? = response.body()
-                                val intent = Intent(irDetalle.context, DetalleActivity::class.java)
-                                intent.putExtra("titulo", articulo.title)
-                                intent.putExtra("img", articulo.thumbnail)
-                                intent.putExtra("price", articulo.price.toString())
-                                intent.putExtra("descripcion", detalleDeArticulo!!.plain_text)
-                                startActivity(irDetalle.context,  intent, null)
 
-                            }
-                        }
-                    })
 
             }
         }
 
-        fun ImageView.loadUrl(url: String) {
+        private fun ImageView.loadUrl(url: String) {
             Picasso.get().load(url.replace("http", "https")).into(this)
         }
     }
